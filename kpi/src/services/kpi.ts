@@ -83,6 +83,12 @@ export const addTarget = (target) => {
     return target;
 };
 
+export const createTarget = (target) => {
+    target.targetId = uuidv4();
+
+    return target;
+};
+
 export const editTarget = (target) => {
     const listKpi = getDataFromDb("listKpi") ? getDataFromDb("listKpi") : [];
 
@@ -187,19 +193,23 @@ export const addTask = (targetId, criteriaId, task) => {
     const newListKpi = listKpi.map((kpi) => {
         if (kpi?.targetId == targetId) {
             const newListCriteria = kpi?.criterias.map((criteria) => {
-                if (criteria.criteriaId == criteriaId) {
+                console.log(criteria);
+
+                if (criteria?.criteriaId == criteriaId) {
                     if (criteria?.tasks) {
                         return {
                             ...criteria,
                             tasks: [...criteria.tasks, task],
                         };
+                    } else {
+                        return {
+                            ...criteria,
+                            tasks: [task],
+                        };
                     }
-
-                    return {
-                        ...criteria,
-                        tasks: [task],
-                    };
                 }
+
+                return criteria;
             });
 
             return { ...kpi, criterias: newListCriteria };
@@ -207,6 +217,8 @@ export const addTask = (targetId, criteriaId, task) => {
 
         return kpi;
     });
+
+    console.log(newListKpi);
 
     storeDataInDb("listKpi", newListKpi);
 

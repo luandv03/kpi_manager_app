@@ -15,6 +15,7 @@ import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Target } from "../Target";
 import { getListKpi, addTarget } from "../../services/kpi";
 import { TourGuidContext } from "../../providers/TourGuide";
+import { Import } from "../Import";
 
 const { TextArea } = Input;
 
@@ -171,14 +172,18 @@ export const Home: React.FC = () => {
                     />
                 </Flex>
 
-                <Button
-                    type="primary"
-                    style={{ height: 40, backgroundColor: "#6F65E8" }}
-                    onClick={showModal}
-                    ref={listRef[0]}
-                >
-                    Thêm mục tiêu
-                </Button>
+                <Flex gap={8}>
+                    <Import />
+
+                    <Button
+                        type="primary"
+                        style={{ height: 40, backgroundColor: "#6F65E8" }}
+                        onClick={showModal}
+                        ref={listRef[0]}
+                    >
+                        Thêm mục tiêu
+                    </Button>
+                </Flex>
             </Flex>
 
             {listKpi.length > 0 &&

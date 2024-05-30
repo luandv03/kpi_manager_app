@@ -203,7 +203,7 @@ export const Schedule = () => {
                     <Flex
                         vertical
                         style={{
-                            background: "#5EDD46",
+                            background: "#E2E0FA",
                             padding: "5px 10px 10px 10px",
                             borderRadius: 5,
                             fontWeight: 500,

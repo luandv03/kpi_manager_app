@@ -3,11 +3,24 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile, UploadProps } from "antd";
 import { Button, Flex, Form, message, Modal, Upload } from "antd";
 import * as XLSX from "xlsx";
-import { addCriteria, addTarget, addTask } from "../../services/kpi";
+import {
+    addCriteria,
+    addTarget,
+    addTask,
+    updateProgressTask,
+} from "../../services/kpi";
+import { getDataFromDb } from "../../services/localStorage";
 
-export const Import = () => {
+export const Import = ({ updateListKpi }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [file, setFile] = useState();
+    const [countRow, setCountRow] = useState(0);
+    // onchange states
+    const [excelFile, setExcelFile] = useState(null);
+    const [typeError, setTypeError] = useState(null);
+
+    // submit state
+    const [excelData, setExcelData] = useState(null);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -40,40 +53,45 @@ export const Import = () => {
         });
     };
 
-    const changeFile = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    // onchange states
-    const [excelFile, setExcelFile] = useState(null);
-    const [typeError, setTypeError] = useState(null);
-
-    // submit state
-    const [excelData, setExcelData] = useState(null);
-
     // onchange event
     const handleFile = (e) => {
+        // eslint-disable-next-line prefer-const
         let fileTypes = [
             "application/vnd.ms-excel",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "text/csv",
         ];
+        // eslint-disable-next-line prefer-const
         let selectedFile = e.target.files[0];
         if (selectedFile) {
             if (selectedFile && fileTypes.includes(selectedFile.type)) {
                 setTypeError(null);
+                // eslint-disable-next-line prefer-const
                 let reader = new FileReader();
                 reader.readAsArrayBuffer(selectedFile);
                 reader.onload = (e) => {
                     setExcelFile(e.target.result);
                 };
             } else {
-                setTypeError("Please select only excel file types");
+                setTypeError("Hãy chọn file có kiểu excel");
                 setExcelFile(null);
             }
         } else {
             console.log("Please select your file");
         }
+    };
+
+    const ExcelDateToJSDate = (date) => {
+        let converted_date = new Date(Math.round((date - 25569) * 864e5));
+        converted_date = String(converted_date).slice(4, 15);
+        date = converted_date.split(" ");
+        const day = date[1];
+        let month = date[0];
+        month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
+        if (month.toString().length <= 1) month = "0" + month;
+        // eslint-disable-next-line prefer-const
+        let year = date[2];
+        return String(year + "-" + month + "-" + day);
     };
 
     // submit event
@@ -85,12 +103,12 @@ export const Import = () => {
             const worksheet = workbook.Sheets[worksheetName];
             const data = XLSX.utils.sheet_to_json(worksheet);
 
-            console.log(data);
+            setCountRow(data.length);
 
             let lastTargetId = "";
             let lastCriteriaId = "";
 
-            data.map((row) => {
+            data.map((row, index) => {
                 if (row["Mục tiêu"]) {
                     const target = {
                         targetName: row["Mục tiêu"],
@@ -111,8 +129,6 @@ export const Import = () => {
                         weight: row["Trọng số_1"],
                     };
 
-                    console.log(criteria);
-
                     const newCriteria = addCriteria(
                         newTarget.targetId,
                         criteria
@@ -124,12 +140,33 @@ export const Import = () => {
                         taskName: row["Công việc"],
                         taskDes: row["Mô tả_2"],
                         taskStatus: "On Going",
-                        taskProgress: 0,
-                        startDate: new Date(row["Thời gian bắt đầu"]),
-                        endDate: new Date(row["Thời gian kết thúc"]),
+                        taskProgress: row["Tiến độ"],
+                        objective: row["Chỉ tiêu công việc"],
+                        startDate: ExcelDateToJSDate(row["Thời gian bắt đầu"]),
+                        endDate: ExcelDateToJSDate(row["Thời gian kết thúc"]),
                     };
 
-                    addTask(newTarget.targetId, newCriteria.criteriaId, task);
+                    const newTask = addTask(
+                        newTarget.targetId,
+                        newCriteria.criteriaId,
+                        task
+                    );
+
+                    updateProgressTask(
+                        lastTargetId,
+                        lastCriteriaId,
+                        newTask.taskId,
+                        newTask.taskProgress
+                    );
+
+                    if (index == data.length - 1) {
+                        console.log("updated");
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        const listKpi = getDataFromDb("listKpi")
+                            ? getDataFromDb("listKpi")
+                            : [];
+                        updateListKpi(listKpi);
+                    }
                 } else {
                     if (row["Tiêu chí"]) {
                         const criteria = {
@@ -137,7 +174,7 @@ export const Import = () => {
                             criteriaDesc: row["Mô tả_1"],
                             criteriaStatus: "On Going",
                             objective: Number(row["Chỉ tiêu"]),
-                            criteriaProgress: 0,
+                            // criteriaProgress: 0,
                             unit: row["Đơn vị"],
                             weight: row["Trọng số_1"],
                         };
@@ -149,23 +186,73 @@ export const Import = () => {
                             taskName: row["Công việc"],
                             taskDes: row["Mô tả_2"],
                             taskStatus: "On Going",
-                            taskProgress: 0,
-                            startDate: new Date(row["Thời gian bắt đầu"]),
-                            endDate: new Date(row["Thời gian kết thúc"]),
+                            taskProgress: row["Tiến độ"],
+                            objective: row["Chỉ tiêu công việc"],
+                            startDate: ExcelDateToJSDate(
+                                row["Thời gian bắt đầu"]
+                            ),
+                            endDate: ExcelDateToJSDate(
+                                row["Thời gian kết thúc"]
+                            ),
                         };
 
-                        addTask(lastTargetId, newCriteria.criteriaId, task);
+                        const newTask = addTask(
+                            lastTargetId,
+                            newCriteria.criteriaId,
+                            task
+                        );
+
+                        updateProgressTask(
+                            lastTargetId,
+                            lastCriteriaId,
+                            newTask.taskId,
+                            newTask.taskProgress
+                        );
+
+                        if (index == data.length - 1) {
+                            console.log("updated");
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            const listKpi = getDataFromDb("listKpi")
+                                ? getDataFromDb("listKpi")
+                                : [];
+                            updateListKpi(listKpi);
+                        }
                     } else {
                         const task = {
                             taskName: row["Công việc"],
                             taskDes: row["Mô tả_2"],
                             taskStatus: "On Going",
-                            taskProgress: 0,
-                            startDate: new Date(row["Thời gian bắt đầu"]),
-                            endDate: new Date(row["Thời gian kết thúc"]),
+                            taskProgress: row["Tiến độ"],
+                            objective: row["Chỉ tiêu công việc"],
+                            startDate: ExcelDateToJSDate(
+                                row["Thời gian bắt đầu"]
+                            ),
+                            endDate: ExcelDateToJSDate(
+                                row["Thời gian kết thúc"]
+                            ),
                         };
 
-                        addTask(lastTargetId, lastCriteriaId, task);
+                        const newTask = addTask(
+                            lastTargetId,
+                            lastCriteriaId,
+                            task
+                        );
+
+                        updateProgressTask(
+                            lastTargetId,
+                            lastCriteriaId,
+                            newTask.taskId,
+                            newTask.taskProgress
+                        );
+
+                        if (index == data.length - 1) {
+                            console.log("updated");
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            const listKpi = getDataFromDb("listKpi")
+                                ? getDataFromDb("listKpi")
+                                : [];
+                            updateListKpi(listKpi);
+                        }
                     }
                 }
             });
@@ -175,10 +262,9 @@ export const Import = () => {
     return (
         <>
             <Button
+                icon={<UploadOutlined />}
                 style={{
                     height: 40,
-                    backgroundColor: "#6F65E8",
-                    color: "#FFFF",
                 }}
                 onClick={() => showModal()}
             >
@@ -190,6 +276,13 @@ export const Import = () => {
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                footer={[
+                    <Button onClick={handleCancel}>Hủy</Button>,
+
+                    <Button type="primary" onClick={handleOk}>
+                        Lưu
+                    </Button>,
+                ]}
             >
                 <Flex vertical justify="center" gap={2}>
                     <Flex justify="end">

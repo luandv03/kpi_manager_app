@@ -22,7 +22,15 @@ const { TextArea } = Input;
 export const Home: React.FC = () => {
     const [listKpi, setListKpi] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [targetModal, setTargetModal] = useState({
+        targetName: "",
+        targetDes: "",
+        targetStatus: "On going",
+        weight: 0,
+    });
+    // dùng để edit target
+    const [targetEdit, setTargetEdit] = useState({
         targetName: "",
         targetDes: "",
         targetStatus: "On going",
@@ -49,6 +57,20 @@ export const Home: React.FC = () => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+    };
+
+    // edit target
+    const showModal2 = (target) => {
+        setTargetEdit(target);
+        setIsModalOpen2(true);
+    };
+
+    const handleOk2 = () => {
+        setIsModalOpen2(false);
+    };
+
+    const handleCancel2 = () => {
+        setIsModalOpen2(false);
     };
 
     const handleChange = (key: string) => {
@@ -93,6 +115,19 @@ export const Home: React.FC = () => {
         setListKpi((prev: unknown) => [...prev, kpi]);
     };
 
+    const handleClickScroll = (id: string) => {
+        console.log(id);
+        const element = document.getElementById(`target-${id}`);
+        if (element) {
+            // 👇 Will scroll smoothly to the top of the next section
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest",
+            });
+        }
+    };
+
     useEffect(() => {
         handleGetListKpi();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,6 +156,7 @@ export const Home: React.FC = () => {
                             title={target.targetName}
                             bordered={false}
                             style={{ width: 400 }}
+                            onClick={() => handleClickScroll(target?.targetId)}
                         >
                             <ConfigProvider
                                 theme={{
@@ -136,6 +172,7 @@ export const Home: React.FC = () => {
                                     type="default"
                                     icon={<PlusOutlined />}
                                     size="middle"
+                                    onClick={() => showModal2(target)}
                                 >
                                     Chỉnh sửa
                                 </Button>
@@ -173,7 +210,7 @@ export const Home: React.FC = () => {
                 </Flex>
 
                 <Flex gap={8}>
-                    <Import />
+                    <Import updateListKpi={setListKpi} />
 
                     <Button
                         type="primary"
@@ -242,6 +279,66 @@ export const Home: React.FC = () => {
                             value={targetModal.weight}
                             onChange={(e) =>
                                 setTargetModal((prev) => ({
+                                    ...prev,
+                                    weight: Number(e.target.value),
+                                }))
+                            }
+                        />
+                    </div>
+                </Flex>
+            </Modal>
+
+            <Modal
+                title="Chỉnh sửa mục tiêu"
+                open={isModalOpen2}
+                onOk={handleOk2}
+                onCancel={handleCancel2}
+                footer={[
+                    <Button onClick={handleCancel2}>Hủy</Button>,
+
+                    <Button type="primary" onClick={handleOk2}>
+                        Lưu
+                    </Button>,
+                ]}
+            >
+                <Flex vertical gap={8}>
+                    <div>
+                        <Typography.Title level={5}>
+                            Tên mục tiêu
+                        </Typography.Title>
+                        <Input
+                            value={targetEdit.targetName}
+                            onChange={(e) =>
+                                setTargetEdit((prev) => ({
+                                    ...prev,
+                                    targetName: e.target.value,
+                                }))
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <Typography.Title level={5}>Mô tả</Typography.Title>
+                        <TextArea
+                            autoSize={{ minRows: 3, maxRows: 5 }}
+                            value={targetEdit.targetDes}
+                            onChange={(e) =>
+                                setTargetEdit((prev) => ({
+                                    ...prev,
+                                    targetDes: e.target.value,
+                                }))
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <Typography.Title level={5}>
+                            Trọng số (%)
+                        </Typography.Title>
+                        <Input
+                            value={targetEdit.weight}
+                            onChange={(e) =>
+                                setTargetEdit((prev) => ({
                                     ...prev,
                                     weight: Number(e.target.value),
                                 }))

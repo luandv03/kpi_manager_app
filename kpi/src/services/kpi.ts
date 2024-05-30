@@ -193,8 +193,6 @@ export const addTask = (targetId, criteriaId, task) => {
     const newListKpi = listKpi.map((kpi) => {
         if (kpi?.targetId == targetId) {
             const newListCriteria = kpi?.criterias.map((criteria) => {
-                console.log(criteria);
-
                 if (criteria?.criteriaId == criteriaId) {
                     if (criteria?.tasks) {
                         return {

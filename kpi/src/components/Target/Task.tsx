@@ -18,12 +18,15 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import TextArea from "antd/es/input/TextArea";
+import dayjs from "dayjs";
 
 import type { NotificationArgsProps } from "antd";
 
 type NotificationPlacement = NotificationArgsProps["placement"];
 
 import { updateProgressTask } from "../../services/kpi";
+
+const dateFormat = "YYYY/MM/DD";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
@@ -309,7 +312,11 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                                         Ngày bắt đầu
                                     </Typography.Title>
                                     <DatePicker
-                                        value={taskModal?.startDate}
+                                        // value={taskModal?.startDate}
+                                        defaultValue={dayjs(
+                                            taskModal?.startDate,
+                                            dateFormat
+                                        )}
                                         onChange={(dateString) => {
                                             setTaskModal((prev) => ({
                                                 ...prev,
@@ -324,7 +331,11 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                                         Ngày kết thúc
                                     </Typography.Title>
                                     <DatePicker
-                                        value={taskModal?.endDate}
+                                        // value={taskModal?.endDate}
+                                        defaultValue={dayjs(
+                                            taskModal?.endDate,
+                                            dateFormat
+                                        )}
                                         onChange={(dateString) => {
                                             setTaskModal((prev) => ({
                                                 ...prev,

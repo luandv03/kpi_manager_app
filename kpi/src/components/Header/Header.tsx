@@ -57,7 +57,7 @@ export const Header = () => {
                 <span>
                     <ClockCircleOutlined />
                 </span>
-                <span>2024-17-05</span>
+                <span>2024-05-31</span>
             </Flex>
         </Flex>
     );

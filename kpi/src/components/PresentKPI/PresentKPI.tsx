@@ -165,11 +165,11 @@ export const PresentKPI = () => {
                                 data={[
                                     {
                                         type: "Nghiên cứu",
-                                        value: 25,
+                                        value: 30,
                                     },
                                     {
                                         type: "Giảng dạy",
-                                        value: 25,
+                                        value: 40,
                                     },
                                     {
                                         type: "Phục vụ",

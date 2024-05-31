@@ -17,6 +17,7 @@
     "@ant-design/plots": "^2.2.2",
     "@tabler/icons-react": "^3.3.0",
     "antd": "^5.17.2",
+    "dayjs": "^1.11.11",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -124,7 +124,7 @@ export const Target = ({ target, updateListKpi }) => {
                 // If you don't want click extra trigger collapse, you can prevent this:
                 event.stopPropagation();
             }}
-            style={{ color: "#FFFF" }}
+            style={{ color: "#FFFF", marginRight: -7 }}
         >
             <Tag style={{ borderRadius: 10 }} color="#87d068">
                 {target?.targetStatus}
@@ -163,7 +163,7 @@ export const Target = ({ target, updateListKpi }) => {
                                 key: `${target?.targetId}`,
                                 label: `${target?.targetName}`,
                                 children: (
-                                    <Flex vertical gap={10} >
+                                    <Flex vertical gap={10}>
                                         <Button
                                             size="small"
                                             style={{

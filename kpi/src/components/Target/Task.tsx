@@ -155,7 +155,7 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         borderRadius: 8,
                         padding: "0 10px",
                         borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0
+                        borderBottomRightRadius: 0,
                     }}
                     key={task?.taskId}
                 >
@@ -171,6 +171,7 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         }}
                         style={{
                             color: "#FFFF",
+                            paddingRight: 6,
                         }}
                         gap={6}
                         align="center"

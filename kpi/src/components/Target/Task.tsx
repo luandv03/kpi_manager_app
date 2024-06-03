@@ -154,6 +154,8 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         height: 40,
                         borderRadius: 8,
                         padding: "0 10px",
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0
                     }}
                     key={task?.taskId}
                 >

@@ -184,8 +184,10 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                     colorTextHeading: "black",
                 },
             }}
+            
         >
             <Collapse
+               
                 collapsible="header"
                 defaultActiveKey={["1"]}
                 items={[
@@ -193,7 +195,11 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                         key: `${criteria?.criteriaId}`,
                         label: `${criteria?.criteriaName}`,
                         children: (
-                            <Flex vertical gap={10}>
+                            <Flex vertical gap={10}  style={{
+                                marginRight: -16,
+                                borderRadius: 0,
+                               
+                            }}>
                                 <Button
                                     size="small"
                                     style={{
@@ -221,7 +227,9 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                     },
                 ]}
                 expandIconPosition={"start"}
-                style={{ color: "#FFFF" }}
+                style={{ color: "#FFFF",  
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0 }}
                 expandIcon={({ isActive }) => (
                     <TagOutlined rotate={isActive ? 90 : 0} />
                 )}

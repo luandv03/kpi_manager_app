@@ -163,9 +163,7 @@ export const Target = ({ target, updateListKpi }) => {
                                 key: `${target?.targetId}`,
                                 label: `${target?.targetName}`,
                                 children: (
-                                    <Flex vertical gap={10} style={{
-                                        marginRight: -16,
-                                    }}>
+                                    <Flex vertical gap={10} >
                                         <Button
                                             size="small"
                                             style={{

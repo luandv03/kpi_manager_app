@@ -198,7 +198,6 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                             <Flex vertical gap={10}  style={{
                                 marginRight: -16,
                                 borderRadius: 0,
-                               
                             }}>
                                 <Button
                                     size="small"

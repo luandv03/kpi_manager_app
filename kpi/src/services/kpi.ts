@@ -107,6 +107,16 @@ export const editTarget = (target) => {
     return target;
 };
 
+export const deleteTargetById = (targetId: string) => {
+    const listKpi = getDataFromDb("listKpi") ? getDataFromDb("listKpi") : [];
+
+    const newListKpi = listKpi.filter((target) => target.targetId !== targetId);
+
+    storeDataInDb("listKpi", newListKpi);
+
+    return newListKpi;
+};
+
 export const addCriteria = (targetId, criteria) => {
     const listKpi = getDataFromDb("listKpi") ? getDataFromDb("listKpi") : [];
 

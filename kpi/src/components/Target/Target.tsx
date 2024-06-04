@@ -126,7 +126,7 @@ export const Target = ({ target, updateListKpi }) => {
             }}
             style={{ color: "#FFFF", marginRight: -7 }}
         >
-            <Tag style={{ borderRadius: 10 }} color="#87d068">
+            <Tag style={{ borderRadius: 10, marginRight: 14 }} color="#87d068">
                 {target?.targetStatus}
             </Tag>
 

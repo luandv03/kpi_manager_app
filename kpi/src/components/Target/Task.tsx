@@ -186,7 +186,12 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         >
                             <Slider
                                 style={{
-                                    width: 180,
+                                    width:
+                                        (task?.taskProgress / task.objective) *
+                                            100 <
+                                        100
+                                            ? 180
+                                            : 173,
                                     height: "100%",
                                 }}
                                 defaultValue={task?.taskProgress}

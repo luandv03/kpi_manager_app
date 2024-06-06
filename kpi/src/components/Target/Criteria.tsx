@@ -125,7 +125,15 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
             >
                 <Slider
                     disabled
-                    style={{ width: 180, height: "100%" }}
+                    style={{
+                        width:
+                            (criteria?.criteriaProgress / criteria?.objective) *
+                                100 <
+                            100
+                                ? 180
+                                : 173,
+                        height: "100%",
+                    }}
                     defaultValue={Math.ceil(
                         (criteria?.criteriaProgress / criteria?.objective) * 100
                     )}

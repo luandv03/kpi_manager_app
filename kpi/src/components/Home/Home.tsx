@@ -14,7 +14,7 @@ import {
 import {
     PlusOutlined,
     SearchOutlined,
-    FileExcelTwoTone,
+    FileExcelOutlined,
 } from "@ant-design/icons";
 
 import { Target } from "../Target";
@@ -214,8 +214,7 @@ export const Home: React.FC = () => {
 
                     <Select
                         defaultValue="Loại KPI"
-                        style={{ width: 190 }}
-                        style={{ height: "40px" }}
+                        style={{ width: 190, height: "40px" }}
                         onChange={handleChange}
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         options={optionTarget}
@@ -225,7 +224,12 @@ export const Home: React.FC = () => {
                 <Flex gap={8}>
                     <Popover content={content} trigger="click">
                         <Button
-                            icon={<FileExcelTwoTone ref={listRef[1]} />}
+                            icon={
+                                <FileExcelOutlined
+                                    ref={listRef[1]}
+                                    style={{ color: "#6F65E8" }}
+                                />
+                            }
                             style={{
                                 height: 40,
                             }}

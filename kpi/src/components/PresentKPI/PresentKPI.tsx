@@ -186,7 +186,7 @@ export const PresentKPI = () => {
                             borderRadius: 15,
                         }}
                     >
-                        <h3>Hiệu suất</h3>
+                        <h3 style={{ marginBottom: 20 }}>% KPI đạt được</h3>
 
                         <DualChart />
                     </Card>

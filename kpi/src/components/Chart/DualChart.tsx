@@ -2,43 +2,35 @@ import { Line } from "@ant-design/plots";
 
 const data = [
     {
-        date: "26/05",
-        type: "Hiệu suất",
+        date: "31/05",
         value: 2,
     },
     {
-        date: "27/05",
-        type: "Hiệu suất",
-        value: 4,
+        date: "01/06",
+        value: 7,
     },
     {
-        date: "28/05",
-        type: "Hiệu suất",
+        date: "02/06",
         value: 3,
     },
     {
-        date: "27/05",
-        type: "Hiệu suất",
+        date: "03/06",
         value: 5,
     },
     {
-        date: "28/05",
-        type: "Hiệu suất",
+        date: "04/06",
         value: 4,
     },
     {
-        date: "29/05",
-        type: "Hiệu suất",
+        date: "05/06",
         value: 3,
     },
     {
-        date: "30/05",
-        type: "Hiệu suất",
+        date: "06/06",
         value: 4,
     },
     {
-        date: "31/05",
-        type: "Hiệu suất",
+        date: "07/06",
         value: 1,
     },
 ];

@@ -204,6 +204,7 @@ export const addTask = (targetId, criteriaId, task) => {
         if (kpi?.targetId == targetId) {
             const newListCriteria = kpi?.criterias.map((criteria) => {
                 if (criteria?.criteriaId == criteriaId) {
+                    task.unit = criteria.unit;
                     if (criteria?.tasks) {
                         return {
                             ...criteria,

@@ -413,7 +413,7 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                                     Chỉ tiêu
                                 </Typography.Title>
                                 <span style={{ fontWeight: "bold" }}>
-                                    / {task?.objective} {task.unit}
+                                    / {task?.objective} {task?.unit}
                                 </span>
                             </Flex>
                         </Flex>

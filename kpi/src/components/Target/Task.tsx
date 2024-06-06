@@ -238,7 +238,13 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         footer={[
                             <Button onClick={handleCancel}>Hủy</Button>,
 
-                            <Button type="primary" onClick={handleOk}>
+                            <Button
+                                style={{
+                                    backgroundColor: "#6F65E8",
+                                    color: "#FFFF",
+                                }}
+                                onClick={handleOk}
+                            >
                                 Lưu
                             </Button>,
                         ]}
@@ -359,7 +365,13 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                         footer={[
                             <Button onClick={handleCancel3}>Hủy</Button>,
 
-                            <Button type="primary" onClick={handleOk3}>
+                            <Button
+                                style={{
+                                    backgroundColor: "#6F65E8",
+                                    color: "#FFFF",
+                                }}
+                                onClick={handleOk3}
+                            >
                                 Lưu
                             </Button>,
                         ]}

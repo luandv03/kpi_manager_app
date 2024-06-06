@@ -7,15 +7,21 @@ import {
     Flex,
     Input,
     Modal,
+    Popover,
     Select,
     Typography,
 } from "antd";
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+    PlusOutlined,
+    SearchOutlined,
+    FileExcelTwoTone,
+} from "@ant-design/icons";
 
 import { Target } from "../Target";
 import { getListKpi, addTarget } from "../../services/kpi";
 import { TourGuidContext } from "../../providers/TourGuide";
 import { Import } from "../Import";
+import Export from "../Export/Export";
 
 const { TextArea } = Input;
 
@@ -116,7 +122,6 @@ export const Home: React.FC = () => {
     };
 
     const handleClickScroll = (id: string) => {
-        console.log(id);
         const element = document.getElementById(`target-${id}`);
         if (element) {
             // 👇 Will scroll smoothly to the top of the next section
@@ -127,6 +132,14 @@ export const Home: React.FC = () => {
             });
         }
     };
+
+    const content = (
+        <Flex vertical gap={4}>
+            <Export />
+
+            <Import updateListKpi={setListKpi} />
+        </Flex>
+    );
 
     useEffect(() => {
         handleGetListKpi();
@@ -147,7 +160,7 @@ export const Home: React.FC = () => {
                 style={{ margin: "20px 0", width: "100%" }}
                 gap={20}
                 align="flex-end"
-                justify="space-between"
+                // justify="space-between"
             >
                 {listKpi.length > 0 ? (
                     listKpi.slice(0, 3).map((target) => (
@@ -210,7 +223,14 @@ export const Home: React.FC = () => {
                 </Flex>
 
                 <Flex gap={8}>
-                    <Import updateListKpi={setListKpi} />
+                    <Popover content={content} trigger="click">
+                        <Button
+                            icon={<FileExcelTwoTone ref={listRef[1]} />}
+                            style={{
+                                height: 40,
+                            }}
+                        ></Button>
+                    </Popover>
 
                     <Button
                         type="primary"
@@ -236,7 +256,10 @@ export const Home: React.FC = () => {
                 footer={[
                     <Button onClick={handleCancel}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk}
+                    >
                         Lưu
                     </Button>,
                 ]}
@@ -296,7 +319,10 @@ export const Home: React.FC = () => {
                 footer={[
                     <Button onClick={handleCancel2}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk2}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk2}
+                    >
                         Lưu
                     </Button>,
                 ]}

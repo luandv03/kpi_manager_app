@@ -8,10 +8,11 @@ export const TourGuide = ({ children }: { children: React.ReactElement }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
+    const ref4 = useRef(null);
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const listRef = [ref1, ref2, ref3];
+    const listRef = [ref1, ref2, ref3, ref4];
 
     const steps: TourProps["steps"] = [
         {
@@ -30,9 +31,33 @@ export const TourGuide = ({ children }: { children: React.ReactElement }) => {
             },
         },
         {
+            title: "Nhập/Xuất dữ liệu",
+            description: "Nhấn vào đây để nhập/xuất kpi từ/ra file excel",
+            target: () => ref2.current,
+            prevButtonProps: {
+                children: <DoubleLeftOutlined />,
+                style: {
+                    backgroundColor: "#6F65E8",
+                    borderRadius: "50%",
+                    color: "#ffff",
+                    width: 30,
+                    height: 32,
+                },
+            },
+            nextButtonProps: {
+                children: <DoubleRightOutlined />,
+                style: {
+                    backgroundColor: "#6F65E8",
+                    borderRadius: "50%",
+                    width: 30,
+                    height: 32,
+                },
+            },
+        },
+        {
             title: "KPI hiện tại",
             description: "Nhấn vào đây để xem phân tích KPI của bạn",
-            target: () => ref2.current,
+            target: () => ref3.current,
             prevButtonProps: {
                 children: <DoubleLeftOutlined />,
                 style: {
@@ -57,7 +82,7 @@ export const TourGuide = ({ children }: { children: React.ReactElement }) => {
             title: "Lịch trình",
             description:
                 "Nhấn vào đây để xem chi tiết lịch trình công việc của bạn",
-            target: () => ref3.current,
+            target: () => ref4.current,
             prevButtonProps: {
                 children: <DoubleLeftOutlined />,
                 style: {

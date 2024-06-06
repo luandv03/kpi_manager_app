@@ -57,9 +57,9 @@ export const Navbar = () => {
                             to={item.link}
                             ref={
                                 item.key === "dashboard"
-                                    ? listRef[1]
+                                    ? listRef[2]
                                     : item.key === "schedule"
-                                      ? listRef[2]
+                                      ? listRef[3]
                                       : null
                             }
                         >

@@ -184,10 +184,8 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                     colorTextHeading: "black",
                 },
             }}
-            
         >
             <Collapse
-               
                 collapsible="header"
                 defaultActiveKey={["1"]}
                 items={[
@@ -195,10 +193,14 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                         key: `${criteria?.criteriaId}`,
                         label: `${criteria?.criteriaName}`,
                         children: (
-                            <Flex vertical gap={10}  style={{
-                                marginRight: -16,
-                                borderRadius: 0,
-                            }}>
+                            <Flex
+                                vertical
+                                gap={10}
+                                style={{
+                                    marginRight: -16,
+                                    borderRadius: 0,
+                                }}
+                            >
                                 <Button
                                     size="small"
                                     style={{
@@ -226,9 +228,11 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                     },
                 ]}
                 expandIconPosition={"start"}
-                style={{ color: "#FFFF",  
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0 }}
+                style={{
+                    color: "#FFFF",
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                }}
                 expandIcon={({ isActive }) => (
                     <TagOutlined rotate={isActive ? 90 : 0} />
                 )}
@@ -242,7 +246,10 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                 footer={[
                     <Button onClick={handleCancel}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk}
+                    >
                         Lưu
                     </Button>,
                 ]}
@@ -332,7 +339,10 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                 footer={[
                     <Button onClick={handleCancel2}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk2}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk2}
+                    >
                         Lưu
                     </Button>,
                 ]}

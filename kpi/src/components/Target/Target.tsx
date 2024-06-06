@@ -16,7 +16,6 @@ import { Criteria } from "./Criteria";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { addCriteria, deleteTargetById } from "../../services/kpi";
-import { getDataFromDb } from "../../services/localStorage";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Target = ({ target, updateListKpi }) => {
@@ -217,7 +216,10 @@ export const Target = ({ target, updateListKpi }) => {
                 footer={[
                     <Button onClick={handleCancel}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk}
+                    >
                         Lưu
                     </Button>,
                 ]}
@@ -309,7 +311,10 @@ export const Target = ({ target, updateListKpi }) => {
                 footer={[
                     <Button onClick={handleCancel2}>Hủy</Button>,
 
-                    <Button type="primary" onClick={handleOk2}>
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk2}
+                    >
                         Lưu
                     </Button>,
                 ]}

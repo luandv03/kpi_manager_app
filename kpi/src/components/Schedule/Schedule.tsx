@@ -8,6 +8,9 @@ import {
     Row,
     Col,
     Button,
+    Modal,
+    Typography,
+    Input,
 } from "antd";
 import type { BadgeProps, CalendarProps } from "antd";
 import type { Dayjs } from "dayjs";
@@ -48,6 +51,20 @@ const content = (
 
 export const Schedule = () => {
     const [displayTask, setDisplayTask] = useState(false);
+    const [isModalOpen3, setIsModalOpen3] = useState(false);
+    const [value, setValue] = useState(6);
+
+    const showModal3 = () => {
+        setIsModalOpen3(true);
+    };
+
+    const handleOk3 = () => {
+        setIsModalOpen3(false);
+    };
+
+    const handleCancel3 = () => {
+        setIsModalOpen3(false);
+    };
 
     const monthCellRender = (value: Dayjs) => {
         const num = getMonthData(value);
@@ -209,6 +226,7 @@ export const Schedule = () => {
                             fontWeight: 500,
                             marginTop: 20,
                         }}
+                        onClick={() => showModal3()}
                     >
                         <Flex style={{ width: "100%" }} gap={4} align="start">
                             <p style={{ flex: 1 }}>Lên lớp 1234</p>
@@ -226,6 +244,49 @@ export const Schedule = () => {
 
                         <p>Tiến độ: 6/10 giờ</p>
                     </Flex>
+
+                    <Modal
+                        title="Cập nhật tiến độ"
+                        open={isModalOpen3}
+                        onOk={handleOk3}
+                        onCancel={handleCancel3}
+                        footer={[
+                            <Button onClick={handleCancel3}>Hủy</Button>,
+
+                            <Button
+                                style={{
+                                    backgroundColor: "#6F65E8",
+                                    color: "#FFFF",
+                                }}
+                                onClick={handleOk3}
+                            >
+                                Lưu
+                            </Button>,
+                        ]}
+                    >
+                        <Flex gap={10}>
+                            <div>
+                                <Typography.Title level={5}>
+                                    Tiến độ hiện tại
+                                </Typography.Title>
+                                <Input
+                                    value={value}
+                                    onChange={(e) =>
+                                        setValue(Number(e.target.value))
+                                    }
+                                />
+                            </div>
+
+                            <Flex vertical justify="center">
+                                <Typography.Title level={5}>
+                                    Chỉ tiêu
+                                </Typography.Title>
+                                <span style={{ fontWeight: "bold" }}>
+                                    / 10 giờ
+                                </span>
+                            </Flex>
+                        </Flex>
+                    </Modal>
                 </Flex>
             </Flex>
         </div>

@@ -6,6 +6,7 @@ import {
     Input,
     Modal,
     Popover,
+    Slider,
     Space,
     Tag,
     Typography,
@@ -131,8 +132,68 @@ export const Target = ({ target, updateListKpi }) => {
                 // If you don't want click extra trigger collapse, you can prevent this:
                 event.stopPropagation();
             }}
-            style={{ color: "#FFFF", marginRight: -7 }}
+            style={{ color: "#FFFF", paddingRight: 13 }}
+            gap={6}
+            align="center"
         >
+            <Flex
+                align="center"
+                gap={10}
+                style={{ height: "100%", color: "black" }}
+            >
+                <Slider
+                    disabled
+                    style={{
+                        width:
+                            target?.criterias?.reduce((accu, item) => {
+                                return (accu +=
+                                    (item.criteriaProgress / item.objective) *
+                                    item?.weight);
+                            }, 0) < 100
+                                ? 180
+                                : 173,
+                        height: "100%",
+                    }}
+                    defaultValue={target?.criterias?.reduce((accu, item) => {
+                        return (accu +=
+                            (item.criteriaProgress / item.objective) *
+                            item?.weight);
+                    }, 0)}
+                    value={target?.criterias?.reduce((accu, item) => {
+                        return (accu +=
+                            (item.criteriaProgress / item.objective) *
+                            item?.weight);
+                    }, 0)}
+                    styles={{
+                        track: {
+                            background: "transparent",
+                        },
+                        tracks: {
+                            background:
+                                target?.criterias?.reduce((accu, item) => {
+                                    console.log(accu);
+                                    return (accu +=
+                                        (item.criteriaProgress /
+                                            item.objective) *
+                                        item?.weight);
+                                }, 0) < 100
+                                    ? "#FFD800"
+                                    : "#5EDD46",
+                        },
+                    }}
+                />
+
+                <p style={{ color: "#FFFF" }}>
+                    {target?.criterias?.reduce((accu, item) => {
+                        console.log(accu);
+                        return (accu +=
+                            (item.criteriaProgress / item.objective) *
+                            item?.weight);
+                    }, 0)}
+                    %
+                </p>
+            </Flex>
+
             <Tag
                 style={{
                     width: 74,
@@ -225,7 +286,6 @@ export const Target = ({ target, updateListKpi }) => {
                                 extra: genExtra(target),
                             },
                         ]}
-                        expandIconPosition={"end"}
                         style={{ color: "#FFFF" }}
                     />
                 </Space>

@@ -127,9 +127,11 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                     disabled
                     style={{
                         width:
-                            (criteria?.criteriaProgress / criteria?.objective) *
-                                100 <
-                            100
+                            Math.ceil(
+                                (criteria?.criteriaProgress /
+                                    criteria?.objective) *
+                                    100
+                            ) < 100
                                 ? 180
                                 : 173,
                         height: "100%",
@@ -158,8 +160,25 @@ export const Criteria = ({ targetId, criteria, updateListKpi }) => {
                 </p>
             </Flex>
 
-            <Tag style={{ borderRadius: 10 }} color="#87d068">
-                {criteria?.criteriaStatus}
+            <Tag
+                style={{
+                    width: 74,
+                    textAlign: "center",
+                    borderRadius: 10,
+                }}
+                color={
+                    Math.ceil(
+                        (criteria?.criteriaProgress / criteria?.objective) * 100
+                    ) < 100
+                        ? "#FFD800"
+                        : "#5EDD46"
+                }
+            >
+                {Math.ceil(
+                    (criteria?.criteriaProgress / criteria?.objective) * 100
+                ) < 100
+                    ? "On Going"
+                    : "Done"}
             </Tag>
 
             <Popover content={content} trigger="click">

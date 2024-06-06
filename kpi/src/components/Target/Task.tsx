@@ -187,9 +187,11 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
                             <Slider
                                 style={{
                                     width:
-                                        (task?.taskProgress / task.objective) *
-                                            100 <
-                                        100
+                                        Math.ceil(
+                                            (task?.taskProgress /
+                                                task.objective) *
+                                                100
+                                        ) < 100
                                             ? 180
                                             : 173,
                                     height: "100%",
@@ -219,11 +221,23 @@ export const Task = ({ targetId, criteriaId, task, updateListKpi }) => {
 
                         <Tag
                             style={{
+                                width: 74,
+                                textAlign: "center",
                                 borderRadius: 10,
                             }}
-                            color="#87d068"
+                            color={
+                                Math.ceil(
+                                    (task?.taskProgress / task.objective) * 100
+                                ) < 100
+                                    ? "#FFD800"
+                                    : "#5EDD46"
+                            }
                         >
-                            {task?.taskStatus}
+                            {Math.ceil(
+                                (task?.taskProgress / task.objective) * 100
+                            ) < 100
+                                ? "On Going"
+                                : "Done"}
                         </Tag>
 
                         <Popover content={content} trigger="click">

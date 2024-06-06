@@ -16,7 +16,7 @@ import { useState } from "react";
 
 const getListData = (value: Dayjs) => {
     let listData;
-    switch (`${value.date()}-${value.month()}-${value.year()}`) {
+    switch (`${value.date()}-${value.month() + 1}-${value.year()}`) {
         case "6-6-2024":
             listData = [
                 { type: "success", content: "1 công việc" },

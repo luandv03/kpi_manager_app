@@ -133,8 +133,31 @@ export const Target = ({ target, updateListKpi }) => {
             }}
             style={{ color: "#FFFF", marginRight: -7 }}
         >
-            <Tag style={{ borderRadius: 10, marginRight: 14 }} color="#87d068">
-                {target?.targetStatus}
+            <Tag
+                style={{
+                    width: 74,
+                    textAlign: "center",
+                    borderRadius: 10,
+                    marginRight: 14,
+                }}
+                color={
+                    target?.criterias?.reduce((accu, item) => {
+                        console.log(accu);
+                        return (accu +=
+                            (item.criteriaProgress / item.objective) *
+                            item?.weight);
+                    }, 0) < 100
+                        ? "#FFD800"
+                        : "#5EDD46"
+                }
+            >
+                {target?.criterias?.reduce((accu, item) => {
+                    return (accu +=
+                        (item.criteriaProgress / item.objective) *
+                        item?.weight);
+                }, 0) < 100
+                    ? "On Going"
+                    : "Done"}
             </Tag>
 
             <Popover content={content} trigger="click">

@@ -42,18 +42,19 @@ const columns: TableProps<DataType>["columns"] = [
             let progress = 0;
             record?.criterias?.map((item) => {
                 progress +=
-                    Math.round(item.criteriaProgress / item.objective) *
-                    record.weight;
+                    (item.criteriaProgress / item.objective) * item.weight;
             });
             return (
                 <>
                     {
                         <Tag
-                            color={"red"}
                             key={record?.targetStatus}
                             style={{
+                                width: 50,
+                                textAlign: "center",
                                 borderRadius: 10,
                             }}
+                            color={progress < 100 ? "#FFD800" : "#5EDD46"}
                         >
                             {progress}%
                         </Tag>

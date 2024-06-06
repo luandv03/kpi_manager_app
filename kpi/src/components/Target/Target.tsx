@@ -15,7 +15,8 @@ import { MoreOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Criteria } from "./Criteria";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { addCriteria } from "../../services/kpi";
+import { addCriteria, deleteTargetById } from "../../services/kpi";
+import { getDataFromDb } from "../../services/localStorage";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Target = ({ target, updateListKpi }) => {
@@ -104,6 +105,13 @@ export const Target = ({ target, updateListKpi }) => {
 
     // const handleEditTarget = () => {};
 
+    const handleDeleteTargetById = () => {
+        console.log(target?.targetId);
+        const newListKpi = deleteTargetById(target?.targetId);
+
+        updateListKpi(newListKpi);
+    };
+
     const content = (
         <Flex vertical gap={4}>
             <Button onClick={showModal2}>
@@ -111,7 +119,7 @@ export const Target = ({ target, updateListKpi }) => {
             </Button>
 
             <Button>
-                <DeleteOutlined />
+                <DeleteOutlined onClick={() => handleDeleteTargetById()} />
             </Button>
         </Flex>
     );

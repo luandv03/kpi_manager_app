@@ -22,6 +22,7 @@ import { getListKpi, addTarget } from "../../services/kpi";
 import { TourGuidContext } from "../../providers/TourGuide";
 import { Import } from "../Import";
 import Export from "../Export/Export";
+import { storeDataInDb } from "../../services/localStorage";
 
 const { TextArea } = Input;
 
@@ -29,6 +30,8 @@ export const Home: React.FC = () => {
     const [listKpi, setListKpi] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [isModalOpen3, setIsModalOpen3] = useState(false);
+
     const [targetModal, setTargetModal] = useState({
         targetName: "",
         targetDes: "",
@@ -77,6 +80,20 @@ export const Home: React.FC = () => {
 
     const handleCancel2 = () => {
         setIsModalOpen2(false);
+    };
+
+    // reset target
+    const showModal3 = () => {
+        setIsModalOpen3(true);
+    };
+
+    const handleOk3 = () => {
+        handleResetKpi();
+        setIsModalOpen3(false);
+    };
+
+    const handleCancel3 = () => {
+        setIsModalOpen3(false);
     };
 
     const handleChange = (key: string) => {
@@ -140,6 +157,12 @@ export const Home: React.FC = () => {
             <Import updateListKpi={setListKpi} />
         </Flex>
     );
+
+    const handleResetKpi = () => {
+        storeDataInDb("listKpi", []);
+
+        setListKpi([]);
+    };
 
     useEffect(() => {
         handleGetListKpi();
@@ -222,6 +245,17 @@ export const Home: React.FC = () => {
                 </Flex>
 
                 <Flex gap={8}>
+                    {listKpi.length > 0 ? (
+                        <Button
+                            danger
+                            style={{ height: 40 }}
+                            onClick={() => showModal3()}
+                        >
+                            Xoá toàn bộ
+                        </Button>
+                    ) : (
+                        ""
+                    )}
                     <Popover content={content} trigger="click">
                         <Button
                             icon={
@@ -376,6 +410,25 @@ export const Home: React.FC = () => {
                         />
                     </div>
                 </Flex>
+            </Modal>
+
+            <Modal
+                title="Xóa danh sách mục tiêu"
+                open={isModalOpen3}
+                onOk={handleOk3}
+                onCancel={handleCancel3}
+                footer={[
+                    <Button onClick={handleCancel3}>Hủy</Button>,
+
+                    <Button
+                        style={{ backgroundColor: "#6F65E8", color: "#FFFF" }}
+                        onClick={handleOk3}
+                    >
+                        Có
+                    </Button>,
+                ]}
+            >
+                <p>Hành động này sẽ xóa danh sách mục tiêu của bạn</p>
             </Modal>
         </>
     );

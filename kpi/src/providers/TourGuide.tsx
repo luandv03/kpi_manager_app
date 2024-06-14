@@ -156,7 +156,7 @@ export const TourGuide = ({ children }: { children: React.ReactElement }) => {
     const stepsSchedule: TourProps["steps"] = [
         {
             title: "Lịch trình",
-            description: "Nhấn vào đây để xem Công việc của bạn hôm nay",
+            description: "Công việc của bạn hôm nay",
             target: () => listRefSchedule[0].current,
             nextButtonProps: {
                 children: <DoubleRightOutlined />,

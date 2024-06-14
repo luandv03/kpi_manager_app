@@ -15,19 +15,20 @@ import {
 import type { BadgeProps, CalendarProps } from "antd";
 import type { Dayjs } from "dayjs";
 import { EyeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TourGuidContext } from "../../providers/TourGuide";
 
 const getListData = (value: Dayjs) => {
     let listData;
     switch (`${value.date()}-${value.month() + 1}-${value.year()}`) {
-        case "7-6-2024":
+        case "14-6-2024":
             listData = [
                 { type: "success", content: "1 công việc" },
                 { type: "warning", content: "0 công việc đến hạn" },
             ];
             break;
 
-        case "8-6-2024":
+        case "15-6-2024":
             listData = [{ type: "success", content: "" }];
             break;
         default:
@@ -54,6 +55,8 @@ export const Schedule = () => {
     const [isModalOpen3, setIsModalOpen3] = useState(false);
     const [value, setValue] = useState(6);
 
+    const { listRefSchedule } = useContext(TourGuidContext);
+
     const showModal3 = () => {
         setIsModalOpen3(true);
     };
@@ -79,7 +82,15 @@ export const Schedule = () => {
     const dateCellRender = (value: Dayjs) => {
         const listData = getListData(value);
         return (
-            <ul className="events">
+            <ul
+                className="events"
+                ref={
+                    `${value.date()}-${value.month() + 1}-${value.year()}` ==
+                    "14-6-2024"
+                        ? listRefSchedule[0]
+                        : null
+                }
+            >
                 {listData.map((item) => (
                     <li key={item.content}>
                         <Badge
@@ -108,7 +119,11 @@ export const Schedule = () => {
                 </Breadcrumb>
 
                 <Button onClick={() => setDisplayTask(!displayTask)}>
-                    {!displayTask ? <LeftOutlined /> : <RightOutlined />}
+                    {!displayTask ? (
+                        <LeftOutlined ref={listRefSchedule[1]} />
+                    ) : (
+                        <RightOutlined />
+                    )}
                 </Button>
             </Flex>
 

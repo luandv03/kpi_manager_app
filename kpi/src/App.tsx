@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { CommonLayout } from "./layouts/common/CommonLayout";
 import { Home } from "./components/Home";
@@ -20,7 +20,8 @@ import { TourGuidContext } from "./providers/TourGuide";
 import { Profile } from "./components/Profile";
 
 const App: React.FC = () => {
-    const { open, setOpen, steps } = useContext(TourGuidContext);
+    // const [page, setPage] = useState<string>("");
+    const location = useLocation();
 
     return (
         <>
@@ -52,9 +53,41 @@ const App: React.FC = () => {
                 </Route>
             </Routes>
 
-            <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+            <TourGuide pathname={location.pathname} />
         </>
     );
+};
+
+export const TourGuide = ({ pathname }: { pathname: string }) => {
+    const { open, setOpen, steps, stepsSchedule, stepsPresent } =
+        useContext(TourGuidContext);
+
+    switch (pathname) {
+        case "/kpi_present":
+            return (
+                <Tour
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    steps={stepsPresent}
+                />
+            );
+        case "/schedule":
+            return (
+                <Tour
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    steps={stepsSchedule}
+                />
+            );
+        default:
+            return (
+                <Tour
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    steps={steps}
+                />
+            );
+    }
 };
 
 export default App;

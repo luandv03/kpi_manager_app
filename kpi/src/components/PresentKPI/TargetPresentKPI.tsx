@@ -1,7 +1,8 @@
 import { Breadcrumb, Table, TableProps, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { getListKpi } from "../../services/kpi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { TourGuidContext } from "../../providers/TourGuide";
 
 interface DataType {
     criterias: any;
